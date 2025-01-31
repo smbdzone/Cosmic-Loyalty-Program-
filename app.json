@@ -4,18 +4,23 @@
     "slug": "cosmic-loyalty-program",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon/blue-logo-hd.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "We need access to your photo library to upload images."
+      },
+      "bundleIdentifier": "com.smbdigitalzone.cosmicloyaltyprogram"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/icon/logo-blue.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.smbdigitalzone.cosmicloyaltyprogram"
     },
     "web": {
       "bundler": "metro",
@@ -27,15 +32,29 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/icon/logo-blue.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "notification": {
+      "icon": "./assets/icon/blue-logo-hd.png",
+      "color": "#000000"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "156954d3-3a65-43ce-bb9b-dd8ed413c296"
+      }
+    },
+    "owner": "smbdigitalzone"
   }
 }
