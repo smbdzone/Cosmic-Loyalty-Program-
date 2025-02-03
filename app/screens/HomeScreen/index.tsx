@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ScrollView,
   Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import { useAuthStore } from "@/store/authStore";
 import { LinearGradient } from "expo-linear-gradient";
@@ -19,8 +20,8 @@ import Popup from "@/components/ui/CustomModal";
 
 const HomeScreen = () => {
   const { user, welcomeMessage } = useAuthStore();
-  const { width } = Dimensions.get("window");
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const { height, width, scale, fontScale } = useWindowDimensions();
   const dataPoints = [
     require("@/assets/images/points-container.png"),
     require("@/assets/images/points-container.png"),
@@ -56,16 +57,16 @@ const HomeScreen = () => {
           style={{
             position: "absolute",
             right: 15,
-            top: "40%",
+            top: width * 0.15,
             color: "#fff",
-            width: 230,
+            width: "60%",
             fontSize: 12,
           }}
         >
           Earn 1 point for every $1 spent on digital marketing or software
           development services.
         </Text>
-        <View style={{ position: "absolute", right: 20, bottom: 10 }}>
+        <View style={{ position: "absolute", right: 20, bottom: scale * 6 }}>
           <TouchableOpacity
             style={{
               backgroundColor: "white",

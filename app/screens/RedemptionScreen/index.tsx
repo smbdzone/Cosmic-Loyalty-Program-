@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  useWindowDimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import RewardsFooter from "@/components/ui/RewardsFooter";
@@ -32,6 +33,7 @@ const RedemptionScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [render, setRender] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     fetchUser();
@@ -171,11 +173,16 @@ const RedemptionScreen = () => {
                   flexDirection: "row",
                   alignItems: "center",
                   position: "relative",
+                  paddingVertical: 10,
                 }}
               >
                 <View style={{ width: "72%" }}>
                   <Text
-                    style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "bold",
+                      fontSize: width * 0.036,
+                    }}
                   >
                     {service.title}
                   </Text>
@@ -191,7 +198,11 @@ const RedemptionScreen = () => {
                 </View>
                 <View>
                   <Image
-                    style={{ resizeMode: "contain", width: 120, height: 120 }}
+                    style={{
+                      resizeMode: "contain",
+                      width: width * 0.3,
+                      height: 120,
+                    }}
                     source={service.image}
                   />
                 </View>

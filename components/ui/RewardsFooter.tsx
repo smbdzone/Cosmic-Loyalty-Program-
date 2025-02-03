@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Share,
+  useWindowDimensions,
 } from "react-native";
 import { useAuthStore } from "@/store/authStore";
 import Popup from "./CustomModal";
@@ -22,7 +23,7 @@ const RewardsFooter: React.FC<RewardsFooterProps> = ({
   setIsPopupVisible,
 }) => {
   const { user } = useAuthStore();
-
+  const { width, fontScale } = useWindowDimensions();
   const handleCopy = async () => {
     if (user) {
       await handleCopyReferal(user);
@@ -91,33 +92,36 @@ const RewardsFooter: React.FC<RewardsFooterProps> = ({
         <Text style={styles.sectionTitle}>Earn Rewards</Text>
         {/* <Text style={styles.learnMore}>Learn More</Text> */}
       </View>
-      <View style={{ position: "relative", flexDirection: "row", gap: 10 }}>
-        <TouchableOpacity onPress={shareAppLink} style={styles.bottomContainer}>
+      <View style={{ position: "relative", flexDirection: "row", gap: 14 }}>
+        <TouchableOpacity
+          onPress={shareAppLink}
+          style={[styles.bottomContainer, { width: width * 0.42 }]}
+        >
           <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
             Share
           </Text>
-          <Text style={{ width: 100, color: "#fff", fontSize: 9 }}>
+          <Text style={{ width: width * 0.27, color: "#fff", fontSize: 9.3 }}>
             Share SMB DigitalZone content with branded hashtags. Earn 20
             points...
           </Text>
           <Image
-            style={styles.bottomContainerImage}
+            style={[styles.bottomContainerImage, { width: width * 0.2 }]}
             source={require("@/assets/images/cloud.png")}
           />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setIsPopupVisible(true)}
-          style={styles.bottomContainer}
+          style={[styles.bottomContainer, { width: width * 0.42 }]}
         >
           <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
             Refer a friend
           </Text>
-          <Text style={{ width: 120, color: "#fff", fontSize: 9 }}>
+          <Text style={{ width: width * 0.3, color: "#fff", fontSize: 9.3 }}>
             Earn 50 points per referral after the referred friend completes
             sign-up.
           </Text>
           <Image
-            style={styles.bottomContainerImage}
+            style={[styles.bottomContainerImage, { width: width * 0.19 }]}
             source={require("@/assets/images/bag.png")}
           />
         </TouchableOpacity>
@@ -131,6 +135,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 24,
     fontWeight: "bold",
+    width: "95%",
+    margin: "auto",
   },
   learnMore: {
     color: "#ffffff",
@@ -142,9 +148,10 @@ const styles = StyleSheet.create({
     backgroundColor: `rgba(217, 217, 217, 0.2)`,
     borderRadius: 20,
     padding: 20,
-    width: 170,
+    width: 200,
     height: 120,
     marginTop: 10,
+    margin: "auto",
   },
   bottomContainerImage: {
     position: "absolute",

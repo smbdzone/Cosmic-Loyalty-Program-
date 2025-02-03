@@ -8,6 +8,8 @@ import {
   ImageBackground,
   ScrollView,
   Alert,
+  Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Header from "@/components/ui/Header";
@@ -28,6 +30,7 @@ const ProfileScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [selectedImage, setSelectedImage] = useState<any>(null);
+  const { height, width, scale, fontScale } = useWindowDimensions();
 
   const handleSelectImages = async () => {
     try {
@@ -91,7 +94,7 @@ const ProfileScreen = () => {
           imageStyle={{ resizeMode: "cover" }}
         >
           <Header />
-          <View style={styles.welcomeContainer}>
+          <View style={[styles.welcomeContainer, { width: width * 0.85 }]}>
             <View
               style={{
                 flexDirection: "column",
@@ -209,9 +212,9 @@ const ProfileScreen = () => {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 13,
+                      fontSize: fontScale * 12.5,
                       color: "#fff",
-                      width: 200,
+                      width: width * 0.45,
                       textAlign: "justify",
                     }}
                   >

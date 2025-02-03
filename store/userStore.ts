@@ -14,6 +14,8 @@ interface UserState {
   fetchUser: () => Promise<void>;
   updateProfileImg: (image: File) => Promise<void>;
   updateUser: (name: string, password: string) => Promise<void>;
+  fetchUserRedemptionsTotal: () => Promise<void>;
+  userRedemptionPoints: number;
 }
 
 interface imageData {
@@ -25,6 +27,7 @@ interface imageData {
 export const useUserStore = create<UserState>((set) => ({
   user: null,
   error: null,
+  userRedemptionPoints: 0,
   setError: (error) => set({ error }),
 
   fetchUser: async () => {
@@ -105,6 +108,22 @@ export const useUserStore = create<UserState>((set) => ({
     } catch (error: any) {
       set({ error: error.response?.data?.message || "Error updating user" });
       console.error("Error updating user: ", error);
+    }
+  },
+  fetchUserRedemptionsTotal: async () => {
+    try {
+      const { token } = useAuthStore.getState();
+      const response = await API.get(`/user/get-redemptions-total`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const { totalPoints } = response.data;
+      set({ userRedemptionPoints: totalPoints });
+    } catch (error: any) {
+      set({ error: error.response?.data?.message || "Error fetching user" });
+      console.error("Error fetching user: ", error);
     }
   },
 }));

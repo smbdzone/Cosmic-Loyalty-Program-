@@ -10,6 +10,7 @@ interface RegisterationLayoutProps {
   isLogin: boolean;
   navigationRoute: string;
   btnTitle: string;
+  disabled?: boolean;
 }
 
 const RegisterationLayout: React.FC<RegisterationLayoutProps> = (props) => {
@@ -33,7 +34,11 @@ const RegisterationLayout: React.FC<RegisterationLayoutProps> = (props) => {
 
       {props.children}
       <View style={styles.btnDiv}>
-        <CustomButton title={props.btnTitle} onPress={props.handlePress} />
+        <CustomButton
+          disabled={props.disabled}
+          title={props.btnTitle}
+          onPress={props.handlePress}
+        />
       </View>
       <TouchableOpacity
         style={styles.bottomText}

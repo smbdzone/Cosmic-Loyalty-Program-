@@ -198,7 +198,7 @@ const ProofSubmissionScreen = () => {
               ))}
             </ImageBackground>
           </View>
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20, width: "70%" }}>
             <CustomButton title="Submit" onPress={handleUpload} />
           </View>
           <View

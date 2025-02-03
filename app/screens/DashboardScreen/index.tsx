@@ -18,6 +18,7 @@ import { useMediaStore } from "@/store/uploadMediaStore";
 import { useReferralStore } from "@/store/referalStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/types/navigation";
+import { useUserStore } from "@/store/userStore";
 
 interface CustomTooltipProps {
   x: number;
@@ -26,7 +27,8 @@ interface CustomTooltipProps {
   value: string;
 }
 const DashboardScreen = () => {
-  const { user } = useAuthStore();
+  const { user, fetchUserRedemptionsTotal, userRedemptionPoints } =
+    useUserStore();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { images, fetchSubmissionHistory } = useMediaStore();
   const {
@@ -41,6 +43,7 @@ const DashboardScreen = () => {
     fetchUserReferral("week");
     fetchUserReferralPoints("month");
     fetchSubmissionHistory();
+    fetchUserRedemptionsTotal();
   }, []);
 
   const CustomTooltip = ({ x, y, label, value }: CustomTooltipProps) => (
@@ -96,13 +99,14 @@ const DashboardScreen = () => {
                 padding: 17,
                 borderRadius: 15,
                 height: 80,
+                width: "35%",
               }}
             >
               <Text style={{ fontSize: 11, fontWeight: "900" }}>
                 Total Points Earned
               </Text>
-              <Text style={{ fontSize: 18, marginTop: 10 }}>
-                {user && user.points.toString()}
+              <Text style={{ fontSize: 18, marginTop: 2 }}>
+                {user && user.points?.toString()}
               </Text>
             </View>
             <View
@@ -111,12 +115,15 @@ const DashboardScreen = () => {
                 padding: 17,
                 borderRadius: 15,
                 height: 80,
+                width: "35%",
               }}
             >
               <Text style={{ fontSize: 11, fontWeight: "900" }}>
                 Points Redeemed
               </Text>
-              <Text style={{ fontSize: 18, marginTop: 10 }}>10000</Text>
+              <Text style={{ fontSize: 18, marginTop: 2 }}>
+                {userRedemptionPoints}
+              </Text>
             </View>
             <View
               style={{
@@ -177,7 +184,7 @@ const DashboardScreen = () => {
                     length:
                       (yAxisRange.max - yAxisRange.min) / yAxisRange.step + 1,
                   },
-                  (_, i) => (yAxisRange.min + i * yAxisRange.step).toString()
+                  (_, i) => (yAxisRange.min + i * yAxisRange.step)?.toString()
                 )
               }
               showDataPointOnFocus={true}
@@ -277,11 +284,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   imageContainer: {
-    width: "87%",
+    width: "85%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 30,
+    gap: 4,
   },
   loyaltyImage: {
     width: "100%",

@@ -24,6 +24,7 @@ const LoginScreen = () => {
       navigationRoute="Register"
       btnTitle="Login"
       headingText="Sign in to continue!"
+      disabled={!email || !password}
     >
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
       <View style={{ width: "70%" }}>
@@ -38,7 +39,6 @@ const LoginScreen = () => {
           value={password}
           onChangeText={setPassword}
           secureTextEntry
-          icon={require("@/assets/icon/eye.png")}
         />
       </View>
     </RegisterationLayout>

@@ -10,13 +10,30 @@ const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [referralCode, setReferralCode] = useState("");
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
   const register = useAuthStore((state) => state.register);
   const setEmail = useAuthStore((state) => state.setEmail);
   const error = useAuthStore((state) => state.error);
   const email = useAuthStore((state) => state.email);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  // Password validation function
+  const validatePassword = (text: string) => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,_])[A-Za-z\d@$!%*?&.,_]{8,}$/;
+    if (!passwordRegex.test(text)) {
+      setPasswordError(
+        "Password must be at least 8 characters long, with one uppercase, one lowercase, one number, and one special character."
+      );
+    } else {
+      setPasswordError(null);
+    }
+    setPassword(text);
+  };
+
   const handleRegister = async () => {
+    if (passwordError) return; // Prevent registration if password is invalid
     await register(name, email, password, referralCode, navigation);
   };
 
@@ -26,9 +43,12 @@ const RegisterScreen = () => {
       isLogin={false}
       navigationRoute="Login"
       btnTitle="Sign Up"
+      disabled={
+        !email || !password || !name || (passwordError?.length as any) > 0
+      }
       headingText="Create a new account"
     >
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error && <Text style={styles.errorText}>{error}</Text>}
       <View style={{ width: "70%" }}>
         <CustomInput
           icon={require("@/assets/icon/name-icon.png")}
@@ -45,10 +65,10 @@ const RegisterScreen = () => {
         <CustomInput
           placeholder="Password"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={validatePassword}
           secureTextEntry
-          icon={require("@/assets/icon/eye.png")}
         />
+        {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
         <CustomInput
           placeholder="Referral Code (optional)"
           value={referralCode}
@@ -64,6 +84,7 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
     textAlign: "center",
+    fontSize: 12,
   },
 });
 
