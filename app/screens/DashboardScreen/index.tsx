@@ -105,8 +105,15 @@ const DashboardScreen = () => {
               <Text style={{ fontSize: 11, fontWeight: "900" }}>
                 Total Points Earned
               </Text>
-              <Text style={{ fontSize: 18, marginTop: 2 }}>
-                {user && user.points?.toString()}
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginTop: 2,
+                  color: "#0235B2",
+                  fontWeight: "bold",
+                }}
+              >
+                {user && user.points?.toFixed(2)}
               </Text>
             </View>
             <View
@@ -121,8 +128,15 @@ const DashboardScreen = () => {
               <Text style={{ fontSize: 11, fontWeight: "900" }}>
                 Points Redeemed
               </Text>
-              <Text style={{ fontSize: 18, marginTop: 2 }}>
-                {userRedemptionPoints}
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginTop: 2,
+                  color: "#0235B2",
+                  fontWeight: "bold",
+                }}
+              >
+                {userRedemptionPoints.toFixed(2)}
               </Text>
             </View>
             <View
@@ -136,8 +150,10 @@ const DashboardScreen = () => {
               <Text style={{ fontSize: 11, fontWeight: "900", width: 50 }}>
                 Proof Pending
               </Text>
-              <Text style={{ fontSize: 18 }}>
-                {images.filter((item) => !item.isAproved).length}
+              <Text
+                style={{ fontSize: 18, color: "#0235B2", fontWeight: "bold" }}
+              >
+                {images.filter((item) => !item.isAproved).length.toFixed(2)}
               </Text>
             </View>
           </View>

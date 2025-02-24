@@ -17,12 +17,12 @@ import {
   useNavigationState,
 } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import axios from "axios";
 import { useNotificationsStore } from "@/store/notificationStore";
 import { RootStackParamList } from "@/types/navigation";
 import { useUserStore } from "@/store/userStore";
-
+import io from "socket.io-client";
+const SOCKET_SERVER_URL = "http://192.168.1.2:9000";
 const Header = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const currentRouteName = useNavigationState((state) => {
@@ -31,12 +31,48 @@ const Header = () => {
   });
   const { notifications, fetchNotifications } = useNotificationsStore();
   const { user, fetchUser } = useUserStore();
+  const socket = io(SOCKET_SERVER_URL, {
+    transports: ["websocket"], // Force WebSocket connection instead of polling
+    reconnection: true, // Allow reconnection attempts
+    forceNew: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+  });
+  interface User {
+    _id: string;
+    isOnline: boolean;
+    profileImg?: string;
+    name?: string;
+  }
+
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     fetchUser();
     fetchNotifications();
   }, []);
 
+  useEffect(() => {
+    if (user?._id) {
+      socket.emit("userOnline", user._id);
+    }
+
+    socket.on("updateUserStatus", (data) => {
+      console.log(data, "data");
+      setUsers((prevUsers) =>
+        prevUsers.map((u) =>
+          u._id === data.userId ? { ...u, isOnline: data.isOnline } : u
+        )
+      );
+    });
+
+    return () => {
+      socket.off("updateUserStatus");
+      socket.disconnect();
+    };
+  }, [user?._id]);
+
+  console.log(users, "users");
   return (
     <View style={styles.iconContainer}>
       {!["profile"].includes(currentRouteName) ? (

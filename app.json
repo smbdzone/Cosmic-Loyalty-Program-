@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon/logo-blue.png",
+        "foregroundImage": "./assets/icon/blue-logo-hd.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.smbdigitalzone.cosmicloyaltyprogram"
@@ -32,13 +32,14 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/icon/logo-blue.png",
+          "image": "./assets/icon/blue-logo-hd.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

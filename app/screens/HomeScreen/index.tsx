@@ -17,15 +17,19 @@ import RewardsFooter from "@/components/ui/RewardsFooter";
 import Header from "@/components/ui/Header";
 import PointsComponent from "@/components/ui/PointsComponent";
 import Popup from "@/components/ui/CustomModal";
+import { useNavigation } from "expo-router";
+import { RootStackParamList } from "@/types/navigation";
+import { NavigationProp } from "@react-navigation/native";
 
 const HomeScreen = () => {
   const { user, welcomeMessage } = useAuthStore();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const { height, width, scale, fontScale } = useWindowDimensions();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dataPoints = [
     require("@/assets/images/points-container.png"),
-    require("@/assets/images/points-container.png"),
-    require("@/assets/images/points-container.png"),
+    require("@/assets/images/points-container-2.png"),
+    // require("@/assets/images/points-container-2.png"),
   ];
 
   const renderItem = ({ item }: { item: any }) => (
@@ -33,20 +37,20 @@ const HomeScreen = () => {
       style={{
         width: width * 0.9,
         borderRadius: 20, // Ensure consistent border radius
-        overflow: "hidden", // Clip content inside the container
+        // overflow: "hidden", // Clip content inside the container
         height: 170,
       }}
     >
       <ImageBackground
         source={item}
         style={{
-          width: "100%",
-          height: 190,
-          paddingVertical: 20,
+          width: "98%",
+          height: 220,
+          // paddingVertical: 20,
           top: -25,
-          left: -10,
+          left: 7,
           borderRadius: 12,
-          backgroundSize: "cover",
+          backgroundSize: "contain",
         }}
         resizeMode="contain"
         imageStyle={{
@@ -56,17 +60,17 @@ const HomeScreen = () => {
         <Text
           style={{
             position: "absolute",
-            right: 15,
+            right: 25,
             top: width * 0.15,
             color: "#fff",
-            width: "60%",
-            fontSize: 12,
+            width: "66%",
+            fontSize: 13,
           }}
         >
           Earn 1 point for every $1 spent on digital marketing or software
           development services.
         </Text>
-        <View style={{ position: "absolute", right: 20, bottom: scale * 6 }}>
+        <View style={{ position: "absolute", right: 20, bottom: scale * 19 }}>
           <TouchableOpacity
             style={{
               backgroundColor: "white",
@@ -126,7 +130,11 @@ const HomeScreen = () => {
           </View>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Earn Points</Text>
-            <Text style={styles.learnMore}>Learn More</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("How it works")}
+            >
+              <Text style={styles.learnMore}>Learn More</Text>
+            </TouchableOpacity>
           </View>
           <View style={{ width: "90%" }}>
             <Slider renderItem={renderItem} data={dataPoints} />

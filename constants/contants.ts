@@ -69,27 +69,27 @@ export const ranks = [
     totalReferrals: "5 Referrals",
   },
   {
-    title: "Cosmic Explorer",
+    title: "Stellar Voyager",
     badgeIcon: require("@/assets/icon/explorer-badge.png"),
     totalReferrals: "10 Referrals",
   },
   {
-    title: "Cosmic Legend",
+    title: "Galactic Explorer",
     badgeIcon: require("@/assets/icon/legend-badge.png"),
     totalReferrals: "30 Referrals",
   },
   {
-    title: "Cosmic Champion",
+    title: "Nebula Captain",
     badgeIcon: require("@/assets/icon/champion-badge.png"),
     totalReferrals: "50 Referrals",
   },
   {
-    title: "Cosmic Conqueror",
+    title: "Celestial",
     badgeIcon: require("@/assets/icon/conqueror-badge.png"),
     totalReferrals: "80 Referrals",
   },
   {
-    title: "Cosmic Ruler",
+    title: "Astral Overlord",
     badgeIcon: require("@/assets/icon/ruler-badge.png"),
     totalReferrals: "150 Referrals",
   },

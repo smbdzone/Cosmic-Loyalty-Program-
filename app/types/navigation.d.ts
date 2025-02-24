@@ -9,6 +9,7 @@ declare module "@/types/navigation" {
     notifications: undefined;
     profile: undefined;
     leaderboard: undefined;
+    "How it works": undefined;
     // Add other routes here
   };
 }

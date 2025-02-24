@@ -16,7 +16,6 @@ import * as Linking from "expo-linking";
 import ProofSubmissionScreen from "./screens/ProofSubmissionScreen";
 import SubmissionHistory from "./screens/SubmissionHistory";
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import axios from "axios";
 import { useNotificationsStore } from "@/store/notificationStore";
 import * as Device from "expo-device";
@@ -26,6 +25,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RankScreen from "./screens/RankScreen";
 import LeaderboardScreen from "./screens/LeaderboardScreen";
 import SupportScreen from "./screens/SupportScreen";
+import HowItWorksScreen from "./screens/HowItWorksScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -61,6 +61,11 @@ const menuComponents = [
     icon: require("@/assets/icon/rank-icon.png"),
     name: "SMB Ranking",
     component: RankScreen,
+  },
+  {
+    icon: require("@/assets/icon/how-it-works.png"),
+    name: "How it works",
+    component: HowItWorksScreen,
   },
   {
     icon: require("@/assets/icon/support-icon.png"),
@@ -107,7 +112,10 @@ const DrawerNavigator = () => (
           drawerActiveBackgroundColor: "transparent",
 
           drawerIcon: ({ focused, color, size }) => (
-            <Image style={{ width: 20, height: 20 }} source={item.icon} />
+            <Image
+              style={{ width: 20, height: 20, resizeMode: "contain" }}
+              source={item.icon}
+            />
           ),
         }}
         listeners={({ navigation }) => ({

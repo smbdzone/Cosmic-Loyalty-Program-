@@ -1,3 +1,6 @@
 import axios from "axios";
 
-export const API = axios.create({ baseURL: "http://192.168.1.2:5000/api" });
+// https://api-loyalty.smbdigitalzone.com/api
+export const API = axios.create({
+  baseURL: "https://api-loyalty.smbdigitalzone.com/api",
+});

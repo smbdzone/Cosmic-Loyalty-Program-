@@ -2,7 +2,10 @@ import Header from "@/components/ui/Header";
 import { ranks } from "@/constants/contants";
 import { useNotificationsStore } from "@/store/notificationStore";
 import { useReferralStore } from "@/store/referalStore";
+import { RootStackParamList } from "@/types/navigation";
+import { NavigationProp } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import {
   View,
@@ -16,10 +19,12 @@ import {
 
 const LeaderboardScreen = () => {
   const { leaderboard, fetchLeaderboard } = useReferralStore();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   useEffect(() => {
     fetchLeaderboard();
-  }, []);
+  }, [navigation]);
 
+  console.log(leaderboard);
   return (
     <LinearGradient
       colors={["rgb(52, 52, 52)", "rgba(0, 0, 0, 1)"]}
@@ -44,72 +49,78 @@ const LeaderboardScreen = () => {
             <ScrollView
               contentContainerStyle={{
                 paddingVertical: 20,
-                backgroundColor: "rgba(255,255,255,0.2)",
+                backgroundColor: "#fff",
                 borderRadius: 20,
                 flexDirection: "column",
                 gap: 10,
               }}
             >
-              {leaderboard.map((user, index) => (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    backgroundColor: "#fff",
-                    width: "90%",
-                    margin: "auto",
-                    alignItems: "center",
-                    borderRadius: 20,
-                  }}
-                >
-                  <View style={styles.notificationItem}>
-                    <View>
-                      <Image
-                        style={{
-                          resizeMode: "cover",
-                          width: 50,
-                          height: 50,
-                          borderRadius: 50,
-                        }}
-                        source={{ uri: user.profileImg }}
-                      />
-                    </View>
-                    <View>
-                      <Text style={styles.title}>{user?.name}</Text>
-                      <Text style={styles.body}>
-                        {user?.referralCount} Referrals
-                      </Text>
-                    </View>
-                  </View>
-                  <View>
-                    {user?.rank ? (
-                      <Image
-                        style={{
-                          resizeMode: "contain",
-                          width: 80,
-                          height: 50,
-                          marginTop: 10,
-                        }}
-                        source={
-                          ranks.find((rank) => rank.title === user.rank)
-                            ?.badgeIcon
-                        }
-                      />
-                    ) : (
-                      <Image
-                        style={{
-                          resizeMode: "contain",
-                          width: 80,
-                          height: 50,
-                          marginTop: 10,
-                        }}
-                        source={require("@/assets/icon/advocate-badge.png")}
-                      />
-                    )}
-                  </View>
+              {leaderboard.length === 0 ? (
+                <View style={{ paddingHorizontal: 20 }}>
+                  <Text>No Records found</Text>
                 </View>
-              ))}
+              ) : (
+                leaderboard.map((user, index) => (
+                  <View
+                    key={index}
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      backgroundColor: "#fff",
+                      width: "95%",
+                      margin: "auto",
+                      alignItems: "center",
+                      borderRadius: 20,
+                    }}
+                  >
+                    <View style={styles.notificationItem}>
+                      <View>
+                        <Image
+                          style={{
+                            resizeMode: "cover",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                          }}
+                          source={{ uri: user.profileImg }}
+                        />
+                      </View>
+                      <View>
+                        <Text style={styles.title}>{user?.name}</Text>
+                        <Text style={styles.body}>
+                          {user?.referralCount} Referrals
+                        </Text>
+                      </View>
+                    </View>
+                    <View>
+                      {user?.rank ? (
+                        <Image
+                          style={{
+                            resizeMode: "cover",
+                            width: 50,
+                            height: 50,
+                            marginTop: 10,
+                          }}
+                          source={
+                            ranks.find((rank) => rank.title === user.rank)
+                              ?.badgeIcon
+                          }
+                        />
+                      ) : (
+                        <Image
+                          style={{
+                            resizeMode: "cover",
+                            width: 50,
+                            height: 50,
+                            marginTop: 10,
+                          }}
+                          source={require("@/assets/icon/advocate-badge.png")}
+                        />
+                      )}
+                    </View>
+                  </View>
+                ))
+              )}
             </ScrollView>
           </View>
         </ImageBackground>
@@ -128,7 +139,8 @@ const styles = StyleSheet.create({
   },
   notificationItem: {
     // marginBottom: 16,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
     borderColor: "#ddd",
     borderRadius: 15,
     flexDirection: "row",
@@ -139,8 +151,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   body: {
-    marginTop: 8,
+    marginTop: 1,
     fontSize: 14,
+    fontWeight: "600",
   },
   timestamp: {
     fontSize: 12,
@@ -149,3 +162,6 @@ const styles = StyleSheet.create({
 });
 
 export default LeaderboardScreen;
+
+
+
